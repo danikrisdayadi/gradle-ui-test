@@ -24,6 +24,8 @@ public class LandscapePageTest extends ParentClass {
 
     @Test
     public void LoginTest() throws InterruptedException {
+        driver.get(url);
+        checkCurrentUrlToBe(url + "/login");
         driver.findElement(By.id("email")).sendKeys("dev@interseed.co");
         driver.findElement(By.id("password")).sendKeys("asdasdasd");
         driver.findElement(By.xpath("//button[@type='submit']")).click();
