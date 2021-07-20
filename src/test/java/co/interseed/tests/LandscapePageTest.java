@@ -37,6 +37,9 @@ public class LandscapePageTest extends ParentClass {
         driver.findElement(By.xpath("//textarea[@id='formDescription']")).sendKeys("Landscape Description");
         driver.findElement(By.xpath("//input[@id='formSlides']")).sendKeys(slidesUrl);
 
+        WebElement uploadElement = driver.findElement(By.id("formThumbnail"));
+        uploadElement.sendKeys("C:\\Users\\kanis\\Pictures\\interseed_dev_logo.png");
+
         driver.findElement(By.xpath("//label[normalize-space()='Countries']/following-sibling::div")).click();
         wait.until(ExpectedConditions.textToBe(By.xpath("//*[text()='Cambodia']"), "Cambodia"));
         driver.findElement(By.xpath("//*[text()='Cambodia']")).click();
@@ -58,6 +61,6 @@ public class LandscapePageTest extends ParentClass {
         Assert.assertEquals(Boolean.TRUE, isCountrySelected);
         Assert.assertEquals(Boolean.TRUE, isCategoriesSelected);
 
-
+        driver.findElement(By.xpath("//button[normalize-space()='Submit']")).click();
     }
 }
