@@ -15,6 +15,12 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 public class LandscapePageTest extends ParentClass {
+    String slidesUrl = "https://docs.google.com/presentation/d/e/2PACX-1vQqLlGq947Uk94F9J2j0FgMUPvOiGSeN3zhi3zs06OziaTqrnzsg_ln7MLPXURCansGmysTLL-kAfJC/pub?start=false&loop=false&delayms";
+    String country = "Cambodia";
+    String categories = "Others";
+    String description = "Landscape Description";
+    String tagline = "Testing a Feature";
+    String title = "Test Landscape";
 
     @Test
     public void LoginTest() throws InterruptedException {
@@ -27,8 +33,6 @@ public class LandscapePageTest extends ParentClass {
 
     @Test(dependsOnMethods = {"LoginTest"})
     public void UploadLandscapeTest() throws InterruptedException {
-        String slidesUrl = "https://docs.google.com/presentation/d/e/2PACX-1vQqLlGq947Uk94F9J2j0FgMUPvOiGSeN3zhi3zs06OziaTqrnzsg_ln7MLPXURCansGmysTLL-kAfJC/pub?start=false&loop=false&delayms=3000";
-
         // Go to Landscapes and upload a new one
         driver.findElement(By.linkText("Landscapes")).click();
         WebElement x = driver.findElement(By.xpath("//button[normalize-space()='Upload']"));
@@ -36,27 +40,27 @@ public class LandscapePageTest extends ParentClass {
         checkCurrentUrlToBe(url + "/upload");
 
         // Fill in the form
-        driver.findElement(By.xpath("//input[@id='formTitle']")).sendKeys("Test Landscape");
-        driver.findElement(By.xpath("//input[@id='formTagline']")).sendKeys("Testing a feature");
-        driver.findElement(By.xpath("//textarea[@id='formDescription']")).sendKeys("Landscape Description");
+        driver.findElement(By.xpath("//input[@id='formTitle']")).sendKeys(title);
+        driver.findElement(By.xpath("//input[@id='formTagline']")).sendKeys(tagline);
+        driver.findElement(By.xpath("//textarea[@id='formDescription']")).sendKeys(description);
         driver.findElement(By.xpath("//input[@id='formSlides']")).sendKeys(slidesUrl);
 
         WebElement uploadElement = driver.findElement(By.id("formThumbnail"));
         uploadElement.sendKeys("C:\\Users\\kanis\\Pictures\\interseed_dev_logo.png");
 
         driver.findElement(By.xpath("//label[normalize-space()='Countries']/following-sibling::div")).click();
-        wait.until(ExpectedConditions.textToBe(By.xpath("//*[text()='Cambodia']"), "Cambodia"));
-        driver.findElement(By.xpath("//*[text()='Cambodia']")).click();
+        wait.until(ExpectedConditions.textToBe(By.xpath(String.format("//*[text()='%s']", country)), country));
+        driver.findElement(By.xpath(String.format("//*[text()='%s']", country))).click();
 
         driver.findElement(By.xpath("//label[normalize-space()='Categories']/following-sibling::div/div[1]/div")).click();
-        wait.until(ExpectedConditions.textToBe(By.xpath("//*[text()='Others']"), "Others"));
-        driver.findElement(By.xpath("//*[text()='Others']")).click();
+        wait.until(ExpectedConditions.textToBe(By.xpath(String.format("//*[text()='%s']", categories)), categories));
+        driver.findElement(By.xpath(String.format("//*[text()='%s']", categories))).click();
 
         Boolean isCountrySelected = false;
         Boolean isCategoriesSelected = false;
         try {
-            driver.findElement(By.xpath("//*[text()='Cambodia']"));
-            driver.findElement(By.xpath("//*[text()='Others']"));
+            driver.findElement(By.xpath(String.format("//*[text()='%s']", country)));
+            driver.findElement(By.xpath(String.format("//*[text()='%s']", categories)));
             isCountrySelected = true;
             isCategoriesSelected = true;
         } catch (Exception e) {
@@ -67,18 +71,31 @@ public class LandscapePageTest extends ParentClass {
 
         driver.findElement(By.xpath("//button[normalize-space()='Submit']")).click();
 
-        // Check the landscape is working
+        // Basic check ensuring the landscape is generated
         wait.until(ExpectedConditions.urlContains("landscape"));
-        Assert.assertEquals(Boolean.TRUE, checkElementIsPresent(By.xpath("//span[text()='Cambodia']")));
-        Assert.assertEquals(Boolean.TRUE, checkElementIsPresent(By.xpath("//a[normalize-space()='Interseed Dev']")));
-        Assert.assertEquals(Boolean.TRUE, checkElementIsPresent(By.xpath("//a[normalize-space()='Access the document']")));
+        checkElementIsPresent(By.xpath("//a[normalize-space()='Interseed Dev']"));
+        checkElementIsPresent(By.xpath("//a[normalize-space()='Access the document']"));
     }
 
     @Test(dependsOnMethods = {"UploadLandscapeTest"})
     public void LandscapeSanityCheck() {
         driver.findElement(By.linkText("Landscapes")).click();
-        checkCurrentUrlToBe(url + "landscapes");
+        checkCurrentUrlToBe(url + "/landscapes");
+        driver.findElement(By.xpath(String.format("//h2[normalize-space()='%s']", title))).click();
+        checkElementIsPresent(By.xpath("//a[normalize-space()='Interseed Dev']"));
+        checkElementIsPresent(By.xpath("//a[normalize-space()='Access the document']"));
+        checkElementIsPresent(By.xpath(String.format("//p[normalize-space()='%s']", description)));
 
-        driver.findElement(By.xpath("//h2[normalize-space()='Test Landscape']"));
+        // Make sure the details are correct
+        String modalHeadersLocation = "//div[@class='modal-header']/div[2]";
+        String currTagline = driver.findElement(By.xpath(modalHeadersLocation + "/p")).getText();
+        String currTitle = driver.findElement(By.xpath(modalHeadersLocation + "/h2[1]")).getText();
+        String currCategories = driver.findElement(By.xpath(modalHeadersLocation + "/h2[2]")).getText();
+        Assert.assertEquals(currTagline, tagline);
+        Assert.assertEquals(currTitle, title);
+        Assert.assertEquals(currCategories, categories);
+
+        checkElementIsPresent(By.xpath("//a[normalize-space()='Edit Landscape']"));
+        checkElementIsPresent(By.xpath("//button[normalize-space()='Delete Landscape']"));
     }
 }

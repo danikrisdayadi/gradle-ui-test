@@ -46,12 +46,14 @@ public class ParentClass {
         return new ArrayList<String>(driver.getWindowHandles());
     }
 
-    public Boolean checkElementIsPresent(By element) {
+    public void checkElementIsPresent(By element) {
         try {
             driver.findElement(element);
+            Assert.assertEquals(true, true);
         } catch (Exception e) {
-            return false;
+            System.out.println(e);
+            Assert.assertEquals(true, false);
         }
-        return true;
+
     }
 }
