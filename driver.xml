@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Basic Test Suite">
+    <test name="Basic Login and Register Page Testing">
+        <classes>
+            <class name="co.interseed.tests.LoginPageTest" />
+            <class name="co.interseed.tests.RegisterPageTest" />
+            <class name="co.interseed.tests.FooterComponentTest" />
+            <class name="co.interseed.tests.NavbarComponentTest" />
+        </classes>
+    </test>
+</suite>

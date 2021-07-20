@@ -1,0 +1,12 @@
+co/interseed/tests/RegisterPageTest.java
+ co.interseed.tests.RegisterPageTest
+co/interseed/tests/ParentClass.java
+ co.interseed.tests.ParentClass
+co/interseed/tests/LoginPageTest.java
+ co.interseed.tests.LoginPageTest
+co/interseed/tests/NavbarComponentTest.java
+ co.interseed.tests.NavbarComponentTest
+co/interseed/tests/FooterComponentTest.java
+ co.interseed.tests.FooterComponentTest
+co/interseed/tests/LandscapePageTest.java
+ co.interseed.tests.LandscapePageTest
