@@ -23,13 +23,13 @@ public class LandscapePageTest extends ParentClass {
         driver.findElement(By.id("password")).sendKeys("asdasdasd");
         driver.findElement(By.xpath("//button[@type='submit']")).click();
         wait.until(ExpectedConditions.urlToBe(url + "/dashboard"));
-        Assert.assertEquals(driver.getCurrentUrl(), url + "/dashboard");
+        checkCurrentUrlToBe(url + "/dashboard");
 
         // Go to Landscapes and upload a new one
         driver.findElement(By.linkText("Landscapes")).click();
         WebElement x = driver.findElement(By.xpath("//button[normalize-space()='Upload']"));
         driver.findElement(By.xpath("//button[normalize-space()='Upload']")).click();
-        Assert.assertEquals(driver.getCurrentUrl(), url + "/upload");
+        checkCurrentUrlToBe(url + "/upload");
 
         // Fill in the form
         driver.findElement(By.xpath("//input[@id='formTitle']")).sendKeys("Test Landscape");
@@ -62,5 +62,11 @@ public class LandscapePageTest extends ParentClass {
         Assert.assertEquals(Boolean.TRUE, isCategoriesSelected);
 
         driver.findElement(By.xpath("//button[normalize-space()='Submit']")).click();
+
+        // Check the landscape is working
+        wait.until(ExpectedConditions.urlContains("landscape"));
+        Assert.assertEquals(Boolean.TRUE, checkElementIsPresent(By.xpath("//span[text()='Cambodia']")));
+        Assert.assertEquals(Boolean.TRUE, checkElementIsPresent(By.xpath("//a[normalize-space()='Interseed Dev']")));
+        Assert.assertEquals(Boolean.TRUE, checkElementIsPresent(By.xpath("//a[normalize-space()='Access the document']")));
     }
 }
