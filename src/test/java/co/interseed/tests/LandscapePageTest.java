@@ -82,11 +82,12 @@ public class LandscapePageTest extends ParentClass {
         driver.findElement(By.linkText("Landscapes")).click();
         checkCurrentUrlToBe(url + "/landscapes");
         driver.findElement(By.xpath(String.format("//h2[normalize-space()='%s']", title))).click();
+
+        // Check landscape details
         checkElementIsPresent(By.xpath("//a[normalize-space()='Interseed Dev']"));
         checkElementIsPresent(By.xpath("//a[normalize-space()='Access the document']"));
         checkElementIsPresent(By.xpath(String.format("//p[normalize-space()='%s']", description)));
 
-        // Make sure the details are correct
         String modalHeadersLocation = "//div[@class='modal-header']/div[2]";
         String currTagline = driver.findElement(By.xpath(modalHeadersLocation + "/p")).getText();
         String currTitle = driver.findElement(By.xpath(modalHeadersLocation + "/h2[1]")).getText();
