@@ -16,7 +16,7 @@ import java.util.List;
 public class FooterComponentTest extends ParentClass {
 
     @Test
-    public void sanityCheck() {
+    public void sanityTest() {
         driver.get(url);
         String expectedUrl = url + "/login";
         checkCurrentUrlToBe(expectedUrl);
@@ -26,7 +26,7 @@ public class FooterComponentTest extends ParentClass {
     }
 
     @Test
-    public void functionalCheck() {
+    public void functionalTest() {
         // Initialise browserTabs to get all the opened windows
         List<String> browserTabs;
 

@@ -15,7 +15,7 @@ import java.util.List;
 public class NavbarComponentTest extends ParentClass {
 
     @Test
-    public void checkLinks() throws InterruptedException {
+    public void linksTest() throws InterruptedException {
         driver.get(url);
         String expectedUrl = url + "/login";
         checkCurrentUrlToBe(expectedUrl);
@@ -48,7 +48,7 @@ public class NavbarComponentTest extends ParentClass {
     }
 
     @Test
-    public void checkImages() {
+    public void imagesTest() {
         int numberImagesBroken = 0;
         List<WebElement> imageList = driver.findElements(By.tagName("img"));
         for (WebElement img : imageList) {

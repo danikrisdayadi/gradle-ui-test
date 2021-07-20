@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 
 public class RegisterPageTest extends ParentClass{
     @Test
-    public void RegisterSanityTest() throws InterruptedException {
+    public void registerSanityTest() throws InterruptedException {
         driver.get(url + "/register");
         String expectedLoginUrl = url + "/register";
         String loginUrl = driver.getCurrentUrl();
