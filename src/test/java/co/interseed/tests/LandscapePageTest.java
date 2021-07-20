@@ -15,15 +15,19 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 public class LandscapePageTest extends ParentClass {
+
     @Test
-    public void UploadLandscapeTest() throws InterruptedException {
-        // Login to an account
-        String slidesUrl = "https://docs.google.com/presentation/d/e/2PACX-1vQqLlGq947Uk94F9J2j0FgMUPvOiGSeN3zhi3zs06OziaTqrnzsg_ln7MLPXURCansGmysTLL-kAfJC/pub?start=false&loop=false&delayms=3000";
+    public void LoginTest() throws InterruptedException {
         driver.findElement(By.id("email")).sendKeys("dev@interseed.co");
         driver.findElement(By.id("password")).sendKeys("asdasdasd");
         driver.findElement(By.xpath("//button[@type='submit']")).click();
         wait.until(ExpectedConditions.urlToBe(url + "/dashboard"));
         checkCurrentUrlToBe(url + "/dashboard");
+    }
+
+    @Test(dependsOnMethods = {"LoginTest"})
+    public void UploadLandscapeTest() throws InterruptedException {
+        String slidesUrl = "https://docs.google.com/presentation/d/e/2PACX-1vQqLlGq947Uk94F9J2j0FgMUPvOiGSeN3zhi3zs06OziaTqrnzsg_ln7MLPXURCansGmysTLL-kAfJC/pub?start=false&loop=false&delayms=3000";
 
         // Go to Landscapes and upload a new one
         driver.findElement(By.linkText("Landscapes")).click();
@@ -68,5 +72,13 @@ public class LandscapePageTest extends ParentClass {
         Assert.assertEquals(Boolean.TRUE, checkElementIsPresent(By.xpath("//span[text()='Cambodia']")));
         Assert.assertEquals(Boolean.TRUE, checkElementIsPresent(By.xpath("//a[normalize-space()='Interseed Dev']")));
         Assert.assertEquals(Boolean.TRUE, checkElementIsPresent(By.xpath("//a[normalize-space()='Access the document']")));
+    }
+
+    @Test(dependsOnMethods = {"UploadLandscapeTest"})
+    public void LandscapeSanityCheck() {
+        driver.findElement(By.linkText("Landscapes")).click();
+        checkCurrentUrlToBe(url + "landscapes");
+
+        driver.findElement(By.xpath("//h2[normalize-space()='Test Landscape']"));
     }
 }
