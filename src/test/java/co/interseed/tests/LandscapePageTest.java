@@ -36,20 +36,28 @@ public class LandscapePageTest extends ParentClass {
         driver.findElement(By.xpath("//input[@id='formTagline']")).sendKeys("Testing a feature");
         driver.findElement(By.xpath("//textarea[@id='formDescription']")).sendKeys("Landscape Description");
         driver.findElement(By.xpath("//input[@id='formSlides']")).sendKeys(slidesUrl);
-        driver.findElement(By.xpath("//label[normalize-space()='Countries']/following-sibling::div")).click();
 
+        driver.findElement(By.xpath("//label[normalize-space()='Countries']/following-sibling::div")).click();
         wait.until(ExpectedConditions.textToBe(By.xpath("//*[text()='Cambodia']"), "Cambodia"));
-//        driver.findElement(By.xpath("//label[normalize-space()='Countries']/following-sibling::div/div[2]/div/div[3]")).click();
         driver.findElement(By.xpath("//*[text()='Cambodia']")).click();
+
+        driver.findElement(By.xpath("//label[normalize-space()='Categories']/following-sibling::div/div[1]/div")).click();
+        wait.until(ExpectedConditions.textToBe(By.xpath("//*[text()='Others']"), "Others"));
+        driver.findElement(By.xpath("//*[text()='Others']")).click();
+
         Boolean isCountrySelected = false;
+        Boolean isCategoriesSelected = false;
         try {
             driver.findElement(By.xpath("//*[text()='Cambodia']"));
+            driver.findElement(By.xpath("//*[text()='Others']"));
             isCountrySelected = true;
+            isCategoriesSelected = true;
         } catch (Exception e) {
             System.out.println(e);
         }
         Assert.assertEquals(Boolean.TRUE, isCountrySelected);
-//
-//        List<WebElement> categories = driver.findElements(By.xpath("//label[normalize-space()='Categories']/following-sibling::div/div[1]/div"));
+        Assert.assertEquals(Boolean.TRUE, isCategoriesSelected);
+
+
     }
 }
