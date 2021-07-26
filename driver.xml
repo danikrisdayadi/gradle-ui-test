@@ -6,6 +6,8 @@
             <class name="co.interseed.tests.RegisterPageTest" />
             <class name="co.interseed.tests.FooterComponentTest" />
             <class name="co.interseed.tests.NavbarComponentTest" />
+            <class name="co.interseed.tests.LandscapePageTest" />
+            <class name="co.interseed.tests.EditProfileTest" />
         </classes>
     </test>
 </suite>

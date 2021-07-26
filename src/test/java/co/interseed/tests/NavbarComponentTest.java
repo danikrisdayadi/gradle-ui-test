@@ -13,11 +13,21 @@ import org.testng.annotations.*;
 import java.util.List;
 
 public class NavbarComponentTest extends ParentClass {
-
     @Test
+    public void LoginTest() throws InterruptedException {
+        driver.get(url);
+        checkCurrentUrlToBe(url + "/login");
+        driver.findElement(By.id("email")).sendKeys("dev@interseed.co");
+        driver.findElement(By.id("password")).sendKeys("asdasdasd");
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
+        wait.until(ExpectedConditions.urlToBe(url + "/dashboard"));
+        checkCurrentUrlToBe(url + "/dashboard");
+    }
+
+    @Test(dependsOnMethods = {"LoginTest"})
     public void linksTest() throws InterruptedException {
         driver.get(url);
-        String expectedUrl = url + "/login";
+        String expectedUrl = url + "/dashboard";
         checkCurrentUrlToBe(expectedUrl);
 
         driver.findElement(By.xpath("//img[@alt='Interseed Logo']")).click();
@@ -42,9 +52,6 @@ public class NavbarComponentTest extends ParentClass {
 
         driver.findElement(By.linkText("About")).click();
         checkCurrentUrlToBe(url + "/about");
-
-        driver.findElement(By.linkText("Login")).click();
-        checkCurrentUrlToBe(url + "/login");
     }
 
     @Test

@@ -22,7 +22,7 @@ public class ParentClass {
     @BeforeClass
     public void SetUpEnvironment() {
         System.setProperty("webdriver.chrome.driver",
-                "C:\\Users\\kanis\\Documents\\Legit Stuff\\NUS\\YSI SEA\\Java Extras\\chromedriver\\chromedriver.exe");
+                "C:\\Users\\kanis\\Documents\\Legit Stuff\\NUS\\YSI SEA\\Java Extras\\chromedriver_win32\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         options.addArguments("--start-maximized");
